@@ -17,7 +17,8 @@
   <br>
   <br>
   <h3>Cost: 150$</h3>
-  <button @click="autocl()">Buy autoclicker</button>
+  <button @click="buyAutocl()">Buy autoclicker</button>
+  <button @click="sellAutocl()" v-if="(check!=null)">Sell autoclicker</button>
 
 
 </div>
@@ -27,9 +28,12 @@
 
 export default {
   data(){
-    const count = 0
-    const money = 0
-    return {count, money}
+    return {
+      count: 0,
+      money: 0,
+      check: null,
+
+    }
   },
   methods: {
     click(){
@@ -60,16 +64,22 @@ export default {
         this.count-=this.count
       }
     },
-    autocl(){
+    buyAutocl(){
       if(this.money > 1) {
-        setInterval(this.addCookies,5000);  
+        this.money -= 150
+        this.check = setInterval(this.addCookies,1000);  
+      }
+    },
+    sellAutocl(){
+      if(this.check != null) {
+        clearInterval(this.check)
+        this.check = null
+        
       }
     },
     addCookies(){
       this.count += 1
-    }
-
-
+    },
 }
 }
 </script>
@@ -90,7 +100,7 @@ export default {
     border-radius: 5px;
     background: #fff;
     cursor: pointer;
-    width: 10%;
+    width: 200px;
     height: 6%;
   }
 </style>

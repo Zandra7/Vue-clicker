@@ -1,6 +1,3 @@
-<script setup>
-</script>
-
 <template>
 <div class="app">
   <h1 class="title">Cookie Clicker</h1>
@@ -10,18 +7,15 @@
   <img @click="click()" src="src/assets/cartoonCookie.png" alt="cookie to click">
   <br>
   <button @click="sell1()">Sell 1</button>
-  <button @click="sell10()">Sell 10</button>
-  <button @click="sell100()">Sell 100</button>
-  <br>
   <button @click="sellall()">Sell all</button>
   <br>
   <br>
   <h3>Cost: {{cookieIncrease*20}}$</h3>
   <button @click="click2()">+1 Click</button>
   <br>
-  <h3>Cost: 150$</h3>
-  <button @click="buyAutocl()">Buy autoclicker</button>
-  <button @click="sellAutocl()" v-if="(check!=null)">Sell autoclicker</button>
+  <h3>{{autoclPrice}}$</h3>
+  <button v-if="!hasAutoclicker" @click="buyAutocl()">Buy autoclicker</button>
+  <button v-else @click="addClickToAutocl()">Add click to autoclicker</button>
 
 
 </div>
@@ -36,6 +30,9 @@ export default {
       money: 0,
       check: null,
       cookieIncrease: 1,
+      hasAutoclicker: false,
+      autoClickerIncrease: 1,
+      autoclPrice: 150,
     }
   },
   methods: {
@@ -44,7 +41,6 @@ export default {
     },
     click2(){
       if (this.money >= this.cookieIncrease*20){
-        console.log("hei")
         this.money -= this.cookieIncrease*20
         this.cookieIncrease++
       }
@@ -55,18 +51,6 @@ export default {
         this.count-=1
       }
     },
-    sell10(){
-      if(this.count > 9){
-        this.money+=10
-        this.count-=10
-      }
-    },
-    sell100(){
-      if(this.count > 99){
-        this.money+=100
-        this.count-=100
-      }
-    },
     sellall(){
       if(this.count > 0){
         this.money+=this.count
@@ -75,9 +59,19 @@ export default {
     },
     buyAutocl(){
       if(this.money >= 150) {
+        console.log(this.autoclPrice)
         this.money -= 150
-        this.check = setInterval(this.addCookies,1000);  
+        this.hasAutoclicker = true
+        this.check = setInterval(this.addCookies.bind(this), 1000)
+        this.autoclPrice *= 2
+        console.log(this.autoclPrice)
       }
+    },
+    addClickToAutocl(){
+      if(this.money >= this.autoclPrice){
+        this.autoClickerIncrease += 1
+        this.autoclPrice *= 2
+      }  
     },
     sellAutocl(){
       if(this.check != null) {
@@ -88,7 +82,7 @@ export default {
       }
     },
     addCookies(){
-      this.count += 1
+      this.count += this.autoClickerIncrease
     },
 }
 }

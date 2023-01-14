@@ -1,6 +1,11 @@
-# clicker
+# Clicker
 
-This template should help get you started developing with Vue 3 in Vite.
+Simple clicker game in Vue.js. 
+I made this to learn the basics of Vue. 
+Features of the game include: 
+* Clicking to get cookies
+* Selling cookies for money 
+* Buying upgrades
 
 ## Recommended IDE Setup
 

@@ -4,7 +4,7 @@
   <h2>Cookies: {{count}}</h2>
   <h2>Cash: {{money}}$</h2>
 
-  <img @click="click()" src="src/assets/cartoonCookie.png" alt="cookie to click">
+  <img @click="click()" src="src/assets/cookie.svg" alt="cookie to click">
   <br>
   <button @click="sell1()">Sell 1</button>
   <button @click="sellall()">Sell all</button>
@@ -16,7 +16,6 @@
   <h3>{{autoclPrice}}$</h3>
   <button v-if="!hasAutoclicker" @click="buyAutocl()">Buy autoclicker</button>
   <button v-else @click="addClickToAutocl()">Add click to autoclicker</button>
-
 
 </div>
 </template>
@@ -46,7 +45,7 @@ export default {
       }
     },
     sell1(){
-      if (this.count >= 0){
+      if (this.count > 0){
         this.money+=1
         this.count-=1
       }

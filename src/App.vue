@@ -16,6 +16,9 @@
   <h3>{{autoclPrice}}$</h3>
   <button v-if="!hasAutoclicker" @click="buyAutocl()">Buy autoclicker</button>
   <button v-else @click="addClickToAutocl()">Add click to autoclicker</button>
+  <br>
+  <h3>{{this.x2moneyPrice}}$</h3>
+  <button @click="buyDoubleMoney()">x2 Sell price</button>
 
 </div>
 </template>
@@ -31,31 +34,45 @@ export default {
       cookieIncrease: 1,
       hasAutoclicker: false,
       autoClickerIncrease: 1,
-      autoclPrice: 150,
+      autoclPrice: 150, 
+      x2moneyPrice: 200,
+      doubleMoney: false,
     }
   },
   methods: {
     click(){
       this.count += this.cookieIncrease
     },
+
     click2(){
       if (this.money >= this.cookieIncrease*20){
         this.money -= this.cookieIncrease*20
         this.cookieIncrease++
       }
     },
+
     sell1(){
       if (this.count > 0){
-        this.money+=1
-        this.count-=1
+        if (this.doubleMoney) {
+          this.money += 2;
+        } else {
+          this.money += 1;
+        }
+        this.count--;
       }
     },
+
     sellall(){
       if(this.count > 0){
-        this.money+=this.count
-        this.count-=this.count
+        if (this.doubleMoney) {
+          this.money+=this.count*2
+        } else {
+          this.money+=this.count
+        }
+      this.count-=this.count
       }
     },
+
     buyAutocl(){
       if(this.money >= 150) {
         console.log(this.autoclPrice)
@@ -66,6 +83,7 @@ export default {
         console.log(this.autoclPrice)
       }
     },
+
     addClickToAutocl(){
       if(this.money >= this.autoclPrice){
         this.autoClickerIncrease += 1
@@ -80,10 +98,23 @@ export default {
 
       }
     },
+
     addCookies(){
       this.count += this.autoClickerIncrease
     },
-}
+
+    buyDoubleMoney(){
+      if (this.money >= this.x2moneyPrice){
+        this.money -= this.x2moneyPrice;
+        this.doubleMoney = true;
+        setTimeout(this.resetDoubleMoney.bind(this), 30000);
+      }
+    },
+
+    resetDoubleMoney(){
+      this.doubleMoney = false;
+    },
+  }
 }
 </script>
 

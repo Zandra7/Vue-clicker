@@ -19,6 +19,8 @@
   <br>
   <h3>{{this.x2moneyPrice}}$</h3>
   <button @click="buyDoubleMoney()">x2 Sell price</button>
+  
+  <h3>Double money timer: {{doubleMoneyTimer}}</h3>
 
 </div>
 </template>
@@ -37,6 +39,7 @@ export default {
       autoclPrice: 150, 
       x2moneyPrice: 200,
       doubleMoney: false,
+      doubleMoneyTimer: 30,
     }
   },
   methods: {
@@ -107,6 +110,14 @@ export default {
       if (this.money >= this.x2moneyPrice){
         this.money -= this.x2moneyPrice;
         this.doubleMoney = true;
+        
+        setInterval(() => {
+          if(this.doubleMoneyTimer > 0) {
+            this.doubleMoneyTimer -= 1
+          } else if (this.doubleMoneyTimer === 0) {
+            this.resetDoubleMoney()
+          }
+        }, 1000)
         setTimeout(this.resetDoubleMoney.bind(this), 30000);
       }
     },

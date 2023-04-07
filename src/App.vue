@@ -18,9 +18,8 @@
   <button v-else @click="addClickToAutocl()">Add click to autoclicker</button>
   <br>
   <h3>{{this.x2moneyPrice}}$</h3>
-  <button @click="buyDoubleMoney()">x2 Sell price</button>
-  
-  <h3>Double money timer: {{doubleMoneyTimer}}</h3>
+  <button v-if="!doubleMoney" @click="buyDoubleMoney()">x2 Sell price</button>
+  <button v-else>{{doubleMoneyTimer}}</button>
 
 </div>
 </template>
